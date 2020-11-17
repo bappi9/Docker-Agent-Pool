@@ -1,0 +1,17 @@
+# Using the documentation from Microsoft:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops
+# docker run -e AZP_URL=<Azure DevOps instance> -e AZP_TOKEN=<PAT token> -e AZP_AGENT_NAME=mydockeragent dockeragent:latest
+version: '3'
+services:
+  agent:
+    build: .
+    env_file:
+      - ./agent.env
+    volumes:
+    - .:/code
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/bin/docker:/usr/bin/docker
+    - logvolume01:/var/log
+    restart: always
+volumes:
+  logvolume01: {}
